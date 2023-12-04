@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@apollo/client": "^3.8.8",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
@@ -21,6 +22,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "axios": "^1.6.2",
     "D": "^1.0.0",
+    "graphql": "^16.8.1",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
