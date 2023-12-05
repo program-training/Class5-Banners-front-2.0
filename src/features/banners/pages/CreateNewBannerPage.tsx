@@ -14,7 +14,7 @@ import CancelCreateBannerButton from "../components/CancelCreateBannerButton";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
     addBannerReq,
-    getUnbannerdProducts,
+    getUnbannedProducts,
 } from "../service/bannerReqFromServer";
 import { Navigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
@@ -33,7 +33,7 @@ const CreateNewBannerPage = () => {
         dispatch(addBannerReq({ imageURL: bannerURL }));
     };
     useEffect(() => {
-        dispatch(getUnbannerdProducts());
+        dispatch(getUnbannedProducts());
     }, []);
 
     if (!user) return <Navigate replace to={ROUTES.LogInPage} />;
