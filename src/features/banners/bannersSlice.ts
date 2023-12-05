@@ -7,7 +7,7 @@ import {
     getMyBannersReq,
     getBannerByIdReq,
     deleteBannerReq,
-    getUnbannedProducts,
+    getUnbanneredProducts,
 } from "./service/bannerReqFromServer";
 import { ProductInterface } from "./interface/ProductInterface";
 
@@ -123,16 +123,19 @@ export const bannersSlice = createSlice({
             state.error = payload.error;
             return state;
         });
-        builder.addCase(getUnbannedProducts.pending, (state) => {
+        builder.addCase(getUnbanneredProducts.pending, (state) => {
             state.pending = true;
         });
-        builder.addCase(getUnbannedProducts.fulfilled, (state, { payload }) => {
-            state.pending = false;
-            state.products = payload;
-            state.error = "";
-            return state;
-        });
-        builder.addCase(getUnbannedProducts.rejected, (state, payload) => {
+        builder.addCase(
+            getUnbanneredProducts.fulfilled,
+            (state, { payload }) => {
+                state.pending = false;
+                state.products = payload;
+                state.error = "";
+                return state;
+            }
+        );
+        builder.addCase(getUnbanneredProducts.rejected, (state, payload) => {
             state.pending = false;
             state.error = payload.error;
             return state;
