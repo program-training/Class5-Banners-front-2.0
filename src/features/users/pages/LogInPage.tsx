@@ -71,11 +71,7 @@ const LogIn = () => {
             </>
           )}
           {loading && <CircularProgress />}
-          {error && (
-            <Alert severity="error">
-              an internal server error had occurred. try again later.
-            </Alert>
-          )}
+          {error && <Alert severity="error">{error.message}</Alert>}
 
           <Typography
             variant="body2"

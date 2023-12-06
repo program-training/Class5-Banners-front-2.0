@@ -15,7 +15,7 @@ import SignUpBottomContent from "../components/SignUpBottomContent";
 import SignUpSubmitButton from "../components/SignUpSubmitButton";
 import FormError from "../components/SignUpFormError";
 import { useAppSelector } from "../../../redux/hooks";
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
 import { useMutation } from "@apollo/client";
 import { SIGNUP } from "../service/queries";
@@ -32,6 +32,7 @@ const SignUpPage = () => {
 
   const { userState: user } = useAppSelector((store) => store.user);
   const [Signup, { data, loading, error }] = useMutation(SIGNUP);
+  const navigate = useNavigate();
   const isAllValid =
     username &&
     email &&
@@ -46,8 +47,7 @@ const SignUpPage = () => {
         variables: { user: { username, email, password, isAdmin } },
       });
 
-      if (!error && !loading && data)
-        return <Navigate replace to={ROUTES.LogInPage} />;
+      if (!error && data) navigate(ROUTES.LogInPage);
     }
   };
   if (user) return <Navigate replace to={ROUTES.BannerManagementPage} />;
@@ -112,11 +112,7 @@ const SignUpPage = () => {
           <FormError />
         )}
         {loading && <CircularProgress />}
-        {error && (
-          <Alert severity="error">
-            an internal server error had occurred. try again later.
-          </Alert>
-        )}
+        {error && <Alert severity="error">{error.message}</Alert>}
         <SignUpBottomContent />
       </Grid>
     </Grid>

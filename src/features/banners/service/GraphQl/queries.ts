@@ -11,6 +11,7 @@ export const GET_ALL_BANNERS = gql`
       note
       productURL
       authorID
+      createdAt
     }
   }
 `;
