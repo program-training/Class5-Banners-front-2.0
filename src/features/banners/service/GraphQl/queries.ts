@@ -32,8 +32,8 @@ export const GET_USER_BANNERS = gql`
 `;
 
 export const GET_BANNER_BY_ID = gql`
-  query GetBannerById($productID: ID!) {
-    getBannerByProdIDQuery(productID: $productID) {
+  query getBannerById($productID: ID!) {
+    getBannerByProdIDQuery(productID: $productId) {
       productID
       title
       description
@@ -42,14 +42,16 @@ export const GET_BANNER_BY_ID = gql`
       note
       productURL
       authorID
+      _id
+      createdAt
     }
   }
 `;
-export const GET_UNBANNERED_PRODUCTS = gql`
 
+export const GET_UNBANNERED_PRODUCTS = gql`
   query GetUnbanneredProducts {
     getUnbanneredProducts {
       category
-
     }
+  }
 `;
