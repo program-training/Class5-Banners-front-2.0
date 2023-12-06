@@ -45,9 +45,9 @@ export const GET_BANNER_BY_ID = gql`
     }
 `;
 export const GET_UNBANNERED_PRODUCTS = gql`
-  query GetUnbanneredProducts {
-    getUnbanneredProducts {
-      // Product fields
+    query GetUnbanneredProducts {
+        getUnbanneredProducts {
+            category
+        }
     }
-  }
 `;
