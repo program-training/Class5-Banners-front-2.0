@@ -19,13 +19,13 @@ type Props = {
 };
 
 const DeleteUserDialog = ({ openDialog, setOpenDialog }: Props) => {
-  const [deleteUser, { error, data }] = useMutation(DELETE_USER);
+  const [deleteUser, { error }] = useMutation(DELETE_USER);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const handleDeleteUser = () => {
     deleteUser();
     setOpenDialog(false);
-    if (data) {
+    if (!error) {
       dispatch(logOut);
       navigate(ROUTES.SignUpPage);
     }

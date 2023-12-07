@@ -3,20 +3,20 @@ import react from "@vitejs/plugin-react";
 import { checker } from "vite-plugin-checker";
 // https://vitejs.dev/config/
 export default defineConfig({
-    plugins: [react(), checker({ typescript: true })],
-    test: {
-        globals: true,
-        environment: "jsdom",
-        css: true,
-        setupFiles: "./src/tests/setup.ts",
+  plugins: [react(), checker({ typescript: true, overlay: false })],
+  test: {
+    globals: true,
+    environment: "jsdom",
+    css: true,
+    setupFiles: "./src/tests/setup.ts",
+  },
+  server: {
+    watch: {
+      usePolling: true,
     },
-    server: {
-        watch: {
-            usePolling: true,
-        },
-        host: true, // needed for the Docker Container port mapping to work
-        strictPort: true,
-        port: 5173, // you can replace this port with any port
-    },
-    base: '/banners/'
+    host: true, // needed for the Docker Container port mapping to work
+    strictPort: true,
+    port: 5173, // you can replace this port with any port
+  },
+  base: "/banners",
 });

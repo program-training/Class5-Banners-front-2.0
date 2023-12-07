@@ -31,7 +31,7 @@ const SignUpPage = () => {
   const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(true);
 
   const { userState: user } = useAppSelector((store) => store.user);
-  const [Signup, { data, loading, error }] = useMutation(SIGNUP);
+  const [Signup, { loading, error }] = useMutation(SIGNUP);
   const navigate = useNavigate();
   const isAllValid =
     username &&
@@ -47,7 +47,7 @@ const SignUpPage = () => {
         variables: { user: { username, email, password, isAdmin } },
       });
 
-      if (!error && data) navigate(ROUTES.LogInPage);
+      if (!error) navigate(ROUTES.LogInPage);
     }
   };
   if (user) return <Navigate replace to={ROUTES.BannerManagementPage} />;

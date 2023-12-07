@@ -12,10 +12,14 @@ import { GET_USER, UPDATE_USER } from "../service/queries";
 
 const EditUserPage = () => {
   const { register, handleSubmit } = useForm();
-  const [userData, setUserData] = useState<UserInterface | null>(null);
   const { data: userState, loading, error } = useQuery(GET_USER);
-  const [updateUser, { error: updateError, loading: loadingUpdate }] =
-    useMutation(UPDATE_USER);
+  const [userData, setUserData] = useState<UserInterface | null>(
+    userState || null
+  );
+  const [
+    updateUser,
+    { error: updateError, loading: loadingUpdate, data: updatedUser },
+  ] = useMutation(UPDATE_USER);
 
   useEffect(() => {
     if (userState) {
@@ -28,10 +32,11 @@ const EditUserPage = () => {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setUserData((prev) => ({
-      ...prev!,
-      [name]: value,
-    }));
+    if (name.length)
+      setUserData((prev) => ({
+        ...prev!,
+        [name]: value,
+      }));
   };
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
@@ -96,6 +101,7 @@ const EditUserPage = () => {
         {loadingUpdate && <CircularProgress />}
         {error && <Alert severity="error">{error.message}</Alert>}
         {updateError && <Alert severity="error">{updateError.message}</Alert>}
+        {updatedUser && <Alert severity="success">Update successfully</Alert>}
       </Container>
     </>
   );
