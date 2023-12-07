@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getUser, removeToken, setItem } from "./service/localStorageService";
 import { UserInterface } from "./interfaces/userInterface";
+import client from "../../apollo/apolloApi";
 
 interface initialState {
   userState: UserInterface | null;
@@ -21,6 +22,7 @@ export const userSlice = createSlice({
     logOut: (state) => {
       state.userState = null;
       removeToken();
+      client.clearStore();
       return state;
     },
   },

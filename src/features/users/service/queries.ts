@@ -43,7 +43,6 @@ export const UPDATE_USER = gql`
     updatedUserService(user: $user) {
       username
       email
-      password
       isAdmin
       user_id
     }

@@ -1,5 +1,5 @@
 const ROUTES = {
-  home: '/banners',
+  home: "/banners",
   layout: "/banners",
   BannerManagementPage: "",
   BannerHorizontalPage: "/banners/horizontal/products/:id",
@@ -14,7 +14,7 @@ const ROUTES = {
   EditUserPage: "/banners/user/edit/",
   ForgetPasswordPage: "/banners/user/forget-password/",
   ResetPasswordPage: "/banners/reset-password/",
-  ErrorPage: "*"
+  ErrorPage: "*",
 };
 
 export default ROUTES;

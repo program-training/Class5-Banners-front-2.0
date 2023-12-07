@@ -32,7 +32,7 @@ export const GET_USER_BANNERS = gql`
 `;
 
 export const GET_BANNER_BY_ID = gql`
-  query getBannerById($productID: ID!) {
+  query Query($productId: ID!) {
     getBannerByProdIDQuery(productID: $productId) {
       productID
       title
