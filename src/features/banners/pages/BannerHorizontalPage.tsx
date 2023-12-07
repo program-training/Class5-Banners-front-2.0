@@ -2,10 +2,12 @@ import { styled } from "@mui/system";
 import { keyframes } from "@mui/system";
 import Typography from "@mui/material/Typography";
 import { Box, Stack } from "@mui/material";
-import { getBannerByIdReq } from "../service/bannerReqFromServer";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { setSpecificBanner } from "../bannersSlice";
+import { GET_BANNER_BY_ID } from "../service/GraphQl/queries";
 
 const Img = styled("img")({
   margin: "auto",
@@ -28,8 +30,10 @@ const slideInFromLeft = keyframes`
 const BannerPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const { data } = useQuery(GET_BANNER_BY_ID, { variables: { id } });
+
   useEffect(() => {
-    dispatch(getBannerByIdReq(id as string));
+    data && dispatch(setSpecificBanner(data));
   }, []);
 
   const { specificBanner: banner } = useAppSelector((store) => store.banners);

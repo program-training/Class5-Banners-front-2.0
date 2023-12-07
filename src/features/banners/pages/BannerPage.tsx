@@ -4,8 +4,10 @@ import Typography from "@mui/material/Typography";
 import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
-import { getBannerByIdReq } from "../service/bannerReqFromServer";
 import { useEffect } from "react";
+import { useQuery } from "@apollo/client";
+import { GET_BANNER_BY_ID } from "../service/GraphQl/queries";
+import { setSpecificBanner } from "../bannersSlice";
 
 const Img = styled("img")({
   margin: "auto",
@@ -80,10 +82,15 @@ const BannerPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { specificBanner } = useAppSelector((store) => store.banners);
+  const { data, error } = useQuery(GET_BANNER_BY_ID, {
+    variables: { productId: id },
+  });
 
   useEffect(() => {
-    dispatch(getBannerByIdReq(id as string));
-  }, []);
+    console.log(error);
+
+    data && dispatch(setSpecificBanner(data));
+  }, [data]);
 
   return (
     <>
