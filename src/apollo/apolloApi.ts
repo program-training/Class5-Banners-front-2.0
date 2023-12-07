@@ -4,8 +4,8 @@ import { setContext } from "@apollo/client/link/context";
 import { removeTypenameFromVariables } from "@apollo/client/link/remove-typename";
 
 const removeTypenameLink = removeTypenameFromVariables();
-const BASE_URI = import.meta.env.VITE_BASE_URI;
-const PORT = import.meta.env.VITE_PORT || "4000";
+// const BASE_URI = import.meta.env.VITE_BASE_URI;
+// const PORT = import.meta.env.VITE_PORT || "4000";
 
 const httpLink = createHttpLink({
   // uri: `${BASE_URI}${PORT}`,

@@ -1,11 +1,12 @@
 import { styled } from "@mui/system";
-import { keyframes } from "@mui/system";
+
 import Typography from "@mui/material/Typography";
 import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { getBannerByIdReq } from "../service/bannerReqFromServer";
 import { useEffect } from "react";
+import { blinkAndGrowStyle } from "../style/blinkAndGrow";
 
 const Img = styled("img")({
   margin: "auto",
@@ -16,65 +17,7 @@ const Img = styled("img")({
   objectFit: "cover",
 });
 
-const blinkAndGrow = keyframes`
-  0% {
-    visibility: hidden;
-    transform: scale(1)
-  }
-
-  4% {
-    visibility: hidden;
-  }
-
-  5% {
-    visibility: visible;
-  }
-
-  12% {
-    visibility: visible;
-  }
-
-  13% {
-    visibility: hidden;
-  }
-
-  16% {
-    visibility: hidden;
-  }
-
-  17% {
-    visibility: visible;
-  }
-
-  24% {
-    visibility: visible;
-  }
-
-  25% {
-    visibility: hidden;
-  }
-
-  27% {
-    visibility: hidden;
-  }
-
-  28% {
-    visibility: visible;
-  }
-
-  36% {
-    visibility: visible;
-  }
-
-  60% {
-    visibility: visible;
-
-  }
-
-  100% {
-    visibility: visible;
-  }
-`;
+const blinkAndGrow = blinkAndGrowStyle;
 
 const BannerPage = () => {
   const { id } = useParams();

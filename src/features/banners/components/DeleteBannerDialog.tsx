@@ -4,11 +4,9 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  CircularProgress,
-  Alert,
 } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch } from "../../../redux/hooks";
 import { deleteBannerReq, getBannersReq } from "../service/bannerReqFromServer";
 type Props = {
   openDialog: string | null | boolean;
@@ -17,7 +15,7 @@ type Props = {
 const DeleteBannerDialog = ({ openDialog, setOpenDialog }: Props) => {
   const dispatch = useAppDispatch();
 
-  const { pending, error } = useAppSelector((store) => store.banners);
+  // const {  } = useAppSelector((store) => store.banners);
   const handleDeleteBanner = () => {
     dispatch(deleteBannerReq(openDialog as string));
     setOpenDialog(false);
@@ -30,14 +28,14 @@ const DeleteBannerDialog = ({ openDialog, setOpenDialog }: Props) => {
         <DialogContentText>
           Are you sure you want to delete this banner?
         </DialogContentText>
-        {error && (
+        {/* {error && (
           <DialogContent>
             <Alert severity="error">
               an internal server error had occurred. try again later.
             </Alert>
           </DialogContent>
         )}
-        {pending && <CircularProgress />}
+        {pending && <CircularProgress />} */}
       </DialogContent>
       {
         <DialogActions>

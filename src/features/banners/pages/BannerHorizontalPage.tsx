@@ -1,11 +1,12 @@
 import { styled } from "@mui/system";
 import { keyframes } from "@mui/system";
 import Typography from "@mui/material/Typography";
-import { Box, Stack } from "@mui/material";
+import { Alert, Box, Stack } from "@mui/material";
 import { getBannerByIdReq } from "../service/bannerReqFromServer";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
+import Pending from "../components/Pending";
 
 const Img = styled("img")({
   margin: "auto",
@@ -25,17 +26,20 @@ const slideInFromLeft = keyframes`
   }
 `;
 
-const BannerPage = () => {
+const BannerHorizontalPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(getBannerByIdReq(id as string));
-  }, []);
+  }, [id]);
 
-  const { specificBanner: banner } = useAppSelector((store) => store.banners);
+  const { specificBanner, error, pending } = useAppSelector(
+    (store) => store.banners
+  );
 
   return (
-    <div onClick={() => open(banner?.imageURL)}>
+    <Box onClick={() => open(specificBanner?.imageURL)}>
       <Box
         sx={{
           backgroundImage: `url("/ad-background.png")`,
@@ -69,30 +73,33 @@ const BannerPage = () => {
               animation: `${slideInFromLeft} 1s ease-in-out`, // Added animation
             }}
             alt="ad"
-            src={banner?.imageURL}
+            src={specificBanner?.imageURL}
           />
         </Box>
         <Box flex="1">
           {/* Rest of your content */}
           <Typography variant="h4" fontFamily="fantasy" color="white">
-            {banner?.title || "Title"}
+            {specificBanner?.title}
           </Typography>
           <Typography variant="subtitle1" fontFamily="fantasy" color="white">
-            {banner?.description || "Description"}
+            {specificBanner?.description}
           </Typography>
-          {banner?.note && (
+          {specificBanner?.note && (
             <Typography
               variant="body1"
               fontFamily="cursive"
               color="lightyellow"
             >
-              {banner.note}
+              {specificBanner.note}
             </Typography>
           )}
         </Box>
+
+        {pending && <Pending />}
+        {error && <Alert severity="error">{error}</Alert>}
       </Stack>
-    </div>
+    </Box>
   );
 };
 
-export default BannerPage;
+export default BannerHorizontalPage;
