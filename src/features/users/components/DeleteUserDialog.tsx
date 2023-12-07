@@ -7,29 +7,29 @@ import {
   Alert,
 } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
-import { useMutation } from "@apollo/client";
-import { DELETE_USER } from "../service/queries";
 import { useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
 import { logOut } from "../user-slice";
-import { useAppDispatch } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { deleteUserReq } from "../service/asyncReq";
 type Props = {
   openDialog: boolean;
   setOpenDialog: Dispatch<SetStateAction<boolean>>;
 };
 
 const DeleteUserDialog = ({ openDialog, setOpenDialog }: Props) => {
-  const [deleteUser, { error }] = useMutation(DELETE_USER);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { error, loading, userState } = useAppSelector((store) => store.user);
   const handleDeleteUser = () => {
-    deleteUser();
+    dispatch(deleteUserReq());
     setOpenDialog(false);
-    if (!error) {
-      dispatch(logOut);
+
+    if (!loading && !error && !userState) {
+      dispatch(logOut());
       navigate(ROUTES.SignUpPage);
     }
-    if (error) return <Alert severity="error">{error.message}</Alert>;
+    if (error) return <Alert severity="error">{error}</Alert>;
   };
 
   return (

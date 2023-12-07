@@ -7,25 +7,17 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { Alert, CircularProgress, Container } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { UserInterface } from "../interfaces/userInterface";
-import { useMutation, useQuery } from "@apollo/client";
-import { GET_USER, UPDATE_USER } from "../service/queries";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { editUserReq, getUserReq } from "../service/asyncReq";
 
 const EditUserPage = () => {
   const { register, handleSubmit } = useForm();
-  const { data: userState, loading, error } = useQuery(GET_USER);
-  const [userData, setUserData] = useState<UserInterface | null>(
-    userState || null
-  );
-  const [
-    updateUser,
-    { error: updateError, loading: loadingUpdate, data: updatedUser },
-  ] = useMutation(UPDATE_USER);
-
+  const dispatch = useAppDispatch();
+  const { userState, loading, error } = useAppSelector((store) => store.user);
+  const [userData, setUserData] = useState<UserInterface | null>(null);
   useEffect(() => {
-    if (userState) {
-      const { getUserService } = userState;
-      setUserData(getUserService[0]);
-    }
+    dispatch(getUserReq());
+    setUserData(userState);
   }, [userState]);
 
   const handleChange = (
@@ -45,7 +37,7 @@ const EditUserPage = () => {
       username: data.username,
       isAdmin: data.isAdmin ? true : false,
     };
-    updateUser({ variables: { user: { ...updatedUserData } } });
+    dispatch(editUserReq(updatedUserData));
   };
 
   return (
@@ -98,10 +90,7 @@ const EditUserPage = () => {
           </Button>
         )}
         {loading && <CircularProgress />}
-        {loadingUpdate && <CircularProgress />}
-        {error && <Alert severity="error">{error.message}</Alert>}
-        {updateError && <Alert severity="error">{updateError.message}</Alert>}
-        {updatedUser && <Alert severity="success">Update successfully</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
       </Container>
     </>
   );

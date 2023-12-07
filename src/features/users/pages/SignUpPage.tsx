@@ -14,11 +14,10 @@ import SignUpTopContent from "../components/SignUpTopContent";
 import SignUpBottomContent from "../components/SignUpBottomContent";
 import SignUpSubmitButton from "../components/SignUpSubmitButton";
 import FormError from "../components/SignUpFormError";
-import { useAppSelector } from "../../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { Navigate, useNavigate } from "react-router-dom";
 import ROUTES from "../../router/routes";
-import { useMutation } from "@apollo/client";
-import { SIGNUP } from "../service/queries";
+import { signUpReq } from "../service/asyncReq";
 
 const SignUpPage = () => {
   const [username, setUsername] = useState("");
@@ -30,8 +29,12 @@ const SignUpPage = () => {
   const [isValidPassword, setIsValidPassword] = useState(true);
   const [isValidConfirmPassword, setIsValidConfirmPassword] = useState(true);
 
-  const { userState: user } = useAppSelector((store) => store.user);
-  const [Signup, { loading, error }] = useMutation(SIGNUP);
+  const {
+    userState: user,
+    error,
+    loading,
+  } = useAppSelector((store) => store.user);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isAllValid =
     username &&
@@ -43,11 +46,11 @@ const SignUpPage = () => {
     isValidConfirmPassword;
   const handleSignUp = () => {
     if (isAllValid) {
-      Signup({
-        variables: { user: { username, email, password, isAdmin } },
-      });
+      dispatch(signUpReq({ email, isAdmin, password, username }));
 
-      if (!error) navigate(ROUTES.LogInPage);
+      if (!error) {
+        navigate(ROUTES.LogInPage);
+      }
     }
   };
   if (user) return <Navigate replace to={ROUTES.BannerManagementPage} />;
@@ -112,7 +115,7 @@ const SignUpPage = () => {
           <FormError />
         )}
         {loading && <CircularProgress />}
-        {error && <Alert severity="error">{error.message}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
         <SignUpBottomContent />
       </Grid>
     </Grid>
