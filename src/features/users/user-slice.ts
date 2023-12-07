@@ -42,6 +42,7 @@ export const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(loginReq.pending, (state) => {
+      state.error = "";
       state.loading = true;
       return state;
     }),
@@ -61,6 +62,7 @@ export const userSlice = createSlice({
         return state;
       });
     builder.addCase(signUpReq.pending, (state) => {
+      state.error = "";
       state.loading = true;
       return state;
     }),
@@ -75,6 +77,7 @@ export const userSlice = createSlice({
         return state;
       });
     builder.addCase(deleteUserReq.pending, (state) => {
+      state.error = "";
       state.loading = true;
       return state;
     });
@@ -93,21 +96,23 @@ export const userSlice = createSlice({
       return state;
     });
     builder.addCase(getUserReq.pending, (state) => {
+      state.error = "";
       state.loading = true;
       return state;
     });
     builder.addCase(getUserReq.fulfilled, (state, { payload }) => {
       state.loading = false;
       state.error = "";
-      state.userState = payload.getUserService[0];
+      state.userState = payload;
       return state;
     });
     builder.addCase(getUserReq.rejected, (state, { error }) => {
       state.loading = false;
-      state.error = error as string;
+      state.error = error.message as string;
       return state;
     });
     builder.addCase(editUserReq.pending, (state) => {
+      state.error = "";
       state.loading = true;
       return state;
     });

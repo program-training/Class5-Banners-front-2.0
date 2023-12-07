@@ -49,7 +49,7 @@ const SignUpPage = () => {
     if (isAllValid) {
       dispatch(signUpReq({ email, isAdmin, password, username }));
 
-      if (!error) {
+      if (!loading && !error) {
         navigate(ROUTES.LogInPage);
       }
     }
@@ -111,7 +111,7 @@ const SignUpPage = () => {
           label="Do you want to be registered as an administrator?"
         />
         {isAllValid ? (
-          <SignUpSubmitButton onClick={handleSignUp} />
+          <SignUpSubmitButton onClick={() => handleSignUp()} />
         ) : (
           <FormError />
         )}

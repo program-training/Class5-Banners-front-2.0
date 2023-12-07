@@ -54,7 +54,7 @@ export const deleteUserReq = createAsyncThunk(
 export const getUserReq = createAsyncThunk("user/getUserReq", async () => {
   try {
     const { data: user } = await client.query({ query: GET_USER });
-    return user;
+    return user.getUserService[0];
   } catch (error) {
     return Promise.reject(error);
   }
