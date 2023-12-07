@@ -44,6 +44,7 @@ const SignUpPage = () => {
     isValidEmail &&
     isValidPassword &&
     isValidConfirmPassword;
+
   const handleSignUp = () => {
     if (isAllValid) {
       dispatch(signUpReq({ email, isAdmin, password, username }));

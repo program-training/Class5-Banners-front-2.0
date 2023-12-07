@@ -59,6 +59,7 @@ export const getUserReq = createAsyncThunk("user/getUserReq", async () => {
     return Promise.reject(error);
   }
 });
+
 export const editUserReq = createAsyncThunk(
   "user/editUserReq",
   async (editedUser: Partial<UserInterface>) => {

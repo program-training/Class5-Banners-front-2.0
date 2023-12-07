@@ -1,5 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getToken, getUser, removeToken } from "./service/localStorageService";
+import {
+  getToken,
+  getUser,
+  removeToken,
+  setItem,
+} from "./service/localStorageService";
 import { UserInterface } from "./interfaces/userInterface";
 import client from "../../apollo/apolloApi";
 import {
@@ -45,7 +50,7 @@ export const userSlice = createSlice({
         state.error = "";
         if (payload) {
           state.token = payload;
-          localStorage.setItem("token", payload);
+          setItem("token", payload);
           state.userState = getUser();
         }
         return state;
