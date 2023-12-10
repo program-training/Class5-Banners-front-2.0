@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { BannerInterface } from "../interface/BannerInterface";
 import {
   GET_ALL_BANNERS,
+  GET_BANNER_BY_BANNER_ID,
   GET_BANNER_BY_ID,
   GET_UNBANNERED_PRODUCTS,
 } from "./GraphQl/queries";
@@ -13,20 +14,14 @@ import { ADD_BANNER, DELETE_BANNER, UPDATE_BANNER } from "./GraphQl/mutations";
 
 export const getBannersReq = createAsyncThunk(
   "banners/getBannersReq",
-  async (_, thunkAPI) => {
+  async () => {
     try {
       const { data } = await client.query({
         query: GET_ALL_BANNERS,
       });
       return data.getAllBannersQuery;
     } catch (error) {
-      if (error instanceof ApolloError) {
-        return thunkAPI.rejectWithValue({ error: error.message });
-      } else {
-        return thunkAPI.rejectWithValue({
-          error: "An unknown error occurred",
-        });
-      }
+      return Promise.reject(error);
     }
   }
 );
@@ -108,26 +103,15 @@ export const getMyBannersReq = createAsyncThunk(
 // );
 export const getBannerByIdReq = createAsyncThunk(
   "banners/getBannerByIdReq",
-  async (bannerId: string, thunkAPI) => {
+  async (bannerId: string) => {
     try {
       const { data } = await client.query({
-        query: GET_BANNER_BY_ID,
+        query: GET_BANNER_BY_BANNER_ID,
         variables: { bannerId },
       });
-
-      // Assuming the response is an array, handle accordingly
-      if (data.getBannerByBannerIDQuery.length) {
-        return data.getBannerByBannerIDQuery[0];
-      }
       return data.getBannerByBannerIDQuery;
     } catch (error) {
-      if (error instanceof ApolloError) {
-        return thunkAPI.rejectWithValue({ error: error.message });
-      } else {
-        return thunkAPI.rejectWithValue({
-          error: "An unknown error occurred",
-        });
-      }
+      return Promise.reject(error);
     }
   }
 );
