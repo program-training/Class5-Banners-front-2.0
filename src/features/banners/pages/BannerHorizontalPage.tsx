@@ -6,7 +6,7 @@ import { getBannerByIdReq } from "../service/bannerReqFromServer";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
-import Pending from "../components/Pending";
+import { getBannerByProdIdReq } from "../service/bannerReqFromServer";
 
 const Img = styled("img")({
   margin: "auto",
@@ -29,14 +29,11 @@ const slideInFromLeft = keyframes`
 const BannerHorizontalPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
+  const { specificBanner: banner } = useAppSelector((store) => store.banners);
 
   useEffect(() => {
-    dispatch(getBannerByIdReq(id as string));
-  }, [id]);
-
-  const { specificBanner, error, pending } = useAppSelector(
-    (store) => store.banners
-  );
+    id && dispatch(getBannerByProdIdReq(id));
+  }, [banner]);
 
   return (
     <Box onClick={() => open(specificBanner?.imageURL)}>
@@ -77,7 +74,6 @@ const BannerHorizontalPage = () => {
           />
         </Box>
         <Box flex="1">
-          {/* Rest of your content */}
           <Typography variant="h4" fontFamily="fantasy" color="white">
             {specificBanner?.title}
           </Typography>

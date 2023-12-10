@@ -1,16 +1,17 @@
 export interface BannerInterface {
-    _id: string;
-    productID: string;
-    title: string;
-    description: string;
-    imageURL: string;
-    productURL: string;
-    note: string;
-    category: string;
-    authorID: string;
-    authorUsername: string;
-    createdAt: string;
-    updatedAt: string;
+  _id: string;
+  productID: string;
+  title: string;
+  description: string;
+  imageURL: string;
+  productURL: string;
+  note: string;
+  category: string;
+  authorID: string;
+  authorUsername: string;
+  createdAt: string;
+  updatedAt: string;
+  __typename?: string;
 }
 
 export interface NewBannerInterface {

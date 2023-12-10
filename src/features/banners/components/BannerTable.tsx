@@ -36,7 +36,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 export const BannerTable = ({ setOpenDialog, page }: Props) => {
   const { bannersState } = useAppSelector((store) => store.banners);
   const rows = ["Image", "Title", "Creation Date", "Note", "Delete", "Edit"];
-
   if (page === "banner-management") {
     rows.splice(2, 0, "Author");
   }

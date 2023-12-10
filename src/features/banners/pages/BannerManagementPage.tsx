@@ -21,7 +21,7 @@ const BannerManagementPage = () => {
 
   useEffect(() => {
     dispatch(getBannersReq());
-  }, [bannersState]);
+  }, []);
 
   if (!userState) return <Navigate replace to={ROUTES.LogInPage} />;
   return (
