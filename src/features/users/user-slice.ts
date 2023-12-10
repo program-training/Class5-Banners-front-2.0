@@ -56,9 +56,9 @@ export const userSlice = createSlice({
         }
         return state;
       }),
-      builder.addCase(loginReq.rejected, (state, payload) => {
+      builder.addCase(loginReq.rejected, (state, { error }) => {
         state.loading = false;
-        state.error = payload.error.message as string;
+        state.error = error.message || "";
         return state;
       });
     builder.addCase(signUpReq.pending, (state) => {
@@ -73,7 +73,7 @@ export const userSlice = createSlice({
       }),
       builder.addCase(signUpReq.rejected, (state, { error }) => {
         state.loading = false;
-        state.error = error.message as string;
+        state.error = error.message || "";
         return state;
       });
     builder.addCase(deleteUserReq.pending, (state) => {
@@ -92,7 +92,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(deleteUserReq.rejected, (state, { error }) => {
       state.loading = false;
-      state.error = error.message as string;
+      state.error = error.message || "";
       return state;
     });
     builder.addCase(getUserReq.pending, (state) => {
@@ -108,7 +108,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(getUserReq.rejected, (state, { error }) => {
       state.loading = false;
-      state.error = error.message as string;
+      state.error = error.message || "";
       return state;
     });
     builder.addCase(editUserReq.pending, (state) => {
@@ -124,7 +124,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(editUserReq.rejected, (state, { error }) => {
       state.loading = false;
-      state.error = error.message as string;
+      state.error = error.message || "";
       return state;
     });
   },

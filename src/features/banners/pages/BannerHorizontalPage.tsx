@@ -5,9 +5,7 @@ import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { setSpecificBanner } from "../bannersSlice";
-import { GET_BANNER_BY_ID } from "../service/GraphQl/queries";
+import { getBannerByProdIdReq } from "../service/bannerReqFromServer";
 
 const Img = styled("img")({
   margin: "auto",
@@ -30,13 +28,11 @@ const slideInFromLeft = keyframes`
 const BannerPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const { data } = useQuery(GET_BANNER_BY_ID, { variables: { id } });
+  const { specificBanner: banner } = useAppSelector((store) => store.banners);
 
   useEffect(() => {
-    data && dispatch(setSpecificBanner(data));
-  }, []);
-
-  const { specificBanner: banner } = useAppSelector((store) => store.banners);
+    id && dispatch(getBannerByProdIdReq(id));
+  }, [banner]);
 
   return (
     <div onClick={() => open(banner?.imageURL)}>
@@ -77,7 +73,6 @@ const BannerPage = () => {
           />
         </Box>
         <Box flex="1">
-          {/* Rest of your content */}
           <Typography variant="h4" fontFamily="fantasy" color="white">
             {banner?.title || "Title"}
           </Typography>

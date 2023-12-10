@@ -5,9 +5,7 @@ import { Box, Stack } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { GET_BANNER_BY_ID } from "../service/GraphQl/queries";
-import { setSpecificBanner } from "../bannersSlice";
+import { getBannerByBannerIdReq } from "../service/bannerReqFromServer";
 
 const Img = styled("img")({
   margin: "auto",
@@ -82,15 +80,10 @@ const BannerPage = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
   const { specificBanner } = useAppSelector((store) => store.banners);
-  const { data, error } = useQuery(GET_BANNER_BY_ID, {
-    variables: { productId: id },
-  });
 
   useEffect(() => {
-    console.log(error);
-
-    data && dispatch(setSpecificBanner(data));
-  }, [data]);
+    id && dispatch(getBannerByBannerIdReq(id));
+  }, [id]);
 
   return (
     <>

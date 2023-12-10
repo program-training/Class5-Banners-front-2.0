@@ -66,7 +66,7 @@ const EditUserPage = () => {
           variant="outlined"
           fullWidth
           {...register("username")}
-          value={userData?.username}
+          value={userData?.username || ""}
           sx={{ mb: 2 }}
           onChange={handleChange}
         />
@@ -74,7 +74,7 @@ const EditUserPage = () => {
           control={
             <Checkbox
               {...register("isAdmin")}
-              defaultChecked={userData?.isAdmin === true}
+              defaultChecked={userData?.isAdmin || false}
             />
           }
           label={"Admin"}
@@ -91,6 +91,9 @@ const EditUserPage = () => {
         )}
         {loading && <CircularProgress />}
         {error && <Alert severity="error">{error}</Alert>}
+        {!error && !loading && userState === userData && (
+          <Alert severity="success">update succeeded</Alert>
+        )}
       </Container>
     </>
   );
