@@ -14,47 +14,58 @@ import Layout from "../layout/Layout";
 import BannerPage from "../banners/pages/BannerPage";
 import BannerHorizontalPage from "../banners/pages/BannerHorizontalPage";
 import ROUTES from "./routes";
+import Dashboard from "../banners/components/Dashboard";
 
 const RouterDom = () => {
-  return (
-    <Routes>
-      <Route path="banners">
-        <Route
-          path={ROUTES.BannerHorizontalPage}
-          element={<BannerHorizontalPage />}
-        />
-        <Route path={ROUTES.BannerPage} element={<BannerPage />} />
-        <Route path={ROUTES.BannerPageByCategory} element={<BannerPage />} />
-      </Route>
+    return (
+        <Routes>
+            <Route path="banners">
+                <Route
+                    path={ROUTES.BannerHorizontalPage}
+                    element={<BannerHorizontalPage />}
+                />
+                <Route path={ROUTES.BannerPage} element={<BannerPage />} />
+                <Route
+                    path={ROUTES.BannerPageByCategory}
+                    element={<BannerPage />}
+                />
+            </Route>
 
-      <Route path={ROUTES.layout} element={<Layout />}>
-        <Route
-          path={ROUTES.BannerManagementPage}
-          element={<BannerManagementPage />}
-        />
-        <Route path={ROUTES.MyBannersPage} element={<MyBannersPage />} />
-        <Route
-          path={ROUTES.CreateNewBannerPage}
-          element={<CreateNewBannerPage />}
-        />
-        <Route path={ROUTES.EditBannerPage} element={<EditBannerPage />} />
+            <Route path={ROUTES.layout} element={<Layout />}>
+                <Route path={ROUTES.Dashboard} element={<Dashboard />} />
+                <Route
+                    path={ROUTES.BannerManagementPage}
+                    element={<BannerManagementPage />}
+                />
+                <Route
+                    path={ROUTES.MyBannersPage}
+                    element={<MyBannersPage />}
+                />
+                <Route
+                    path={ROUTES.CreateNewBannerPage}
+                    element={<CreateNewBannerPage />}
+                />
+                <Route
+                    path={ROUTES.EditBannerPage}
+                    element={<EditBannerPage />}
+                />
 
-        <Route path={ROUTES.SignUpPage} element={<SignUpPage />} />
-        <Route path={ROUTES.LogInPage} element={<LogInPage />} />
-        <Route path={ROUTES.ShowUserPage} element={<ShowUserPage />} />
-        <Route path={ROUTES.EditUserPage} element={<EditUserPage />} />
-        <Route
-          path={ROUTES.ForgetPasswordPage}
-          element={<ForgetPasswordPage />}
-        />
-        <Route
-          path={ROUTES.ResetPasswordPage}
-          element={<ResetPasswordPage />}
-        />
-      </Route>
+                <Route path={ROUTES.SignUpPage} element={<SignUpPage />} />
+                <Route path={ROUTES.LogInPage} element={<LogInPage />} />
+                <Route path={ROUTES.ShowUserPage} element={<ShowUserPage />} />
+                <Route path={ROUTES.EditUserPage} element={<EditUserPage />} />
+                <Route
+                    path={ROUTES.ForgetPasswordPage}
+                    element={<ForgetPasswordPage />}
+                />
+                <Route
+                    path={ROUTES.ResetPasswordPage}
+                    element={<ResetPasswordPage />}
+                />
+            </Route>
 
-      <Route path={ROUTES.ErrorPage} element={<ErrorPage />} />
-    </Routes>
-  );
+            <Route path={ROUTES.ErrorPage} element={<ErrorPage />} />
+        </Routes>
+    );
 };
 export default RouterDom;

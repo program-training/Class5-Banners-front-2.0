@@ -1,21 +1,20 @@
-import {
-  SerializedError,
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 import { getToken, getUser, removeToken } from "./service/localStorageService";
 import { UserInterface } from "./interfaces/userInterface";
+import client from "../../apollo/apolloApi";
 import {
-  LoginInterface,
-  SignUpInterface,
-} from "./interfaces/userSliceInterfaces";
+  loginReq,
+  signUpReq,
+  deleteUserReq,
+  getUserReq,
+  editUserReq,
+} from "./service/asyncReq";
 
 interface initialState {
   loading: boolean;
   userState: UserInterface | null;
   token: string | null;
-  error: string | SerializedError;
+  error: string;
 }
 const initialState: initialState = {
   error: "",
@@ -24,79 +23,12 @@ const initialState: initialState = {
   userState: getUser(),
 };
 
-const BASE_URL =
-  import.meta.env.VITE_BASE_URL || "https://banner-service-back.onrender.com:";
-
-export const loginReq = createAsyncThunk(
-  "user/loginReq",
-  async (userFromClient: LoginInterface, thunkAPI) => {
-    try {
-      const { data: token } = await axios.post(
-        `${BASE_URL}/users/login`,
-        userFromClient
-      );
-      return token;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error });
-    }
-  }
-);
-
-export const signUpReq = createAsyncThunk(
-  "user/signUpReq",
-  async (userFromClient: SignUpInterface, thunkAPI) => {
-    try {
-      const { data: user } = await axios.post(
-        `${BASE_URL}/users/sign-up`,
-        userFromClient
-      );
-      return user;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error });
-    }
-  }
-);
-
-export const deleteUserReq = createAsyncThunk(
-  "user/deleteUserReq",
-  async (_, thunkAPI) => {
-    try {
-      const { data: deletedUser } = await axios.delete(`${BASE_URL}/users`);
-      return deletedUser;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error });
-    }
-  }
-);
-
-export const getUserReq = createAsyncThunk(
-  "user/getUserReq",
-  async (_, thunkAPI) => {
-    try {
-      const { data: user } = await axios.get(BASE_URL);
-      return user;
-    } catch (error) {
-      return thunkAPI.rejectWithValue({ error });
-    }
-  }
-);
-export const editUserReq = createAsyncThunk(
-  "user/editUserReq",
-  async (editedUser: Partial<UserInterface>, thunkAPI) => {
-    try {
-      const { data } = await axios.put(`${BASE_URL}/users`, editedUser);
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     logOut: (state) => {
+      client.clearStore();
       state.userState = null;
       state.token = null;
       removeToken();
@@ -120,7 +52,7 @@ export const userSlice = createSlice({
       }),
       builder.addCase(loginReq.rejected, (state, payload) => {
         state.loading = false;
-        state.error = payload.error;
+        state.error = payload.error.message as string;
         return state;
       });
     builder.addCase(signUpReq.pending, (state) => {
@@ -132,22 +64,57 @@ export const userSlice = createSlice({
         state.error = "";
         return state;
       }),
-      builder.addCase(signUpReq.rejected, (state, payload) => {
+      builder.addCase(signUpReq.rejected, (state, { error }) => {
         state.loading = false;
-        state.error = payload.error;
+        state.error = error.message as string;
         return state;
       });
     builder.addCase(deleteUserReq.pending, (state) => {
       state.loading = true;
+      return state;
     });
     builder.addCase(deleteUserReq.fulfilled, (state) => {
+      client.clearStore();
       removeToken();
+      state.error = "";
+      state.loading = false;
       state.token = null;
       state.userState = null;
       return state;
     });
-    builder.addCase(deleteUserReq.rejected, (state, payload) => {
-      state.error = payload.error;
+    builder.addCase(deleteUserReq.rejected, (state, { error }) => {
+      state.loading = false;
+      state.error = error.message as string;
+      return state;
+    });
+    builder.addCase(getUserReq.pending, (state) => {
+      state.loading = true;
+      return state;
+    });
+    builder.addCase(getUserReq.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.error = "";
+      state.userState = payload.getUserService[0];
+      return state;
+    });
+    builder.addCase(getUserReq.rejected, (state, { error }) => {
+      state.loading = false;
+      state.error = error as string;
+      return state;
+    });
+    builder.addCase(editUserReq.pending, (state) => {
+      state.loading = true;
+      return state;
+    });
+    builder.addCase(editUserReq.fulfilled, (state, { payload }) => {
+      state.loading = false;
+      state.error = "";
+      state.userState = payload;
+      return state;
+    });
+    builder.addCase(editUserReq.rejected, (state, { error }) => {
+      state.loading = false;
+      state.error = error.message as string;
       return state;
     });
   },

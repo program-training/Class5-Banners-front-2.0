@@ -9,20 +9,14 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../users/user-slice";
 import DeleteUserDialog from "../users/components/DeleteUserDialog";
 import ROUTES from "../router/routes";
-// import { useAppSelector } from "../../redux/hooks";
 
 const UserMenu = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  // const user = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-    // if (!user.loggedIn) {
-    //   navigate("/banners/user/login");
-    // }
-    //  else
     setAnchorElUser(event.currentTarget);
   };
 
@@ -31,13 +25,13 @@ const UserMenu = () => {
   };
 
   const handleDisplayProfile = () => {
-    navigate(ROUTES.ShowUserPage);
     handleCloseUserMenu();
+    navigate(ROUTES.ShowUserPage);
   };
 
   const handleEditProfile = () => {
-    navigate(ROUTES.EditUserPage);
     handleCloseUserMenu();
+    navigate(ROUTES.EditUserPage);
   };
 
   const handleLogout = () => {
