@@ -38,8 +38,7 @@ export const userSlice = createSlice({
     },
     logOut: (state) => {
       client.clearStore();
-      state.userState = null;
-      state.token = null;
+      state = initialState;
       removeToken();
       return state;
     },
@@ -70,8 +69,9 @@ export const userSlice = createSlice({
       state.loading = true;
       return state;
     }),
-      builder.addCase(signUpReq.fulfilled, (state) => {
+      builder.addCase(signUpReq.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.token = payload;
         state.error = "";
         return state;
       }),
