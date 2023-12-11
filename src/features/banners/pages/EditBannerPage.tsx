@@ -6,7 +6,6 @@ import {
   Button,
   Container,
   CircularProgress,
-  Alert,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -21,9 +20,7 @@ const EditBannerPage = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { bannerID } = useParams();
-  const { specificBanner, error, pending } = useAppSelector(
-    (store) => store.banners
-  );
+  const { specificBanner, pending } = useAppSelector((store) => store.banners);
 
   const [editedBanner, setEditedBanner] = useState<BannerInterface | null>(
     null
@@ -167,11 +164,6 @@ const EditBannerPage = () => {
             </Box>
           )}
           {pending && <CircularProgress />}
-          {error && (
-            <Alert severity="error">
-              An internal server error occurred. Try again later.
-            </Alert>
-          )}
         </Box>
       </form>
     </Container>

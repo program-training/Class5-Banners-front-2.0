@@ -32,6 +32,10 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    resetError: (state) => {
+      state.error = "";
+      return state;
+    },
     logOut: (state) => {
       client.clearStore();
       state.userState = null;
@@ -130,5 +134,5 @@ export const userSlice = createSlice({
   },
 });
 
-export const { logOut } = userSlice.actions;
+export const { logOut, resetError } = userSlice.actions;
 export default userSlice.reducer;

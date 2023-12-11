@@ -90,7 +90,6 @@ const EditUserPage = () => {
           </Button>
         )}
         {loading && <CircularProgress />}
-        {error && <Alert severity="error">{error}</Alert>}
         {!error && !loading && userState === userData && (
           <Alert severity="success">update succeeded</Alert>
         )}
