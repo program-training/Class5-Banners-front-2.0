@@ -5,7 +5,6 @@ import {
   FormControlLabel,
   Checkbox,
   CircularProgress,
-  Alert,
 } from "@mui/material";
 import EmailInput from "../components/EmailInput";
 import PasswordInputs from "../components/PasswordInput";
@@ -116,7 +115,6 @@ const SignUpPage = () => {
           <FormError />
         )}
         {loading && <CircularProgress />}
-        {error && <Alert severity="error">{error}</Alert>}
         <SignUpBottomContent />
       </Grid>
     </Grid>

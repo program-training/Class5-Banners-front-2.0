@@ -4,7 +4,6 @@ import {
   DialogContentText,
   DialogActions,
   Button,
-  Alert,
 } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { useNavigate } from "react-router-dom";
@@ -29,7 +28,6 @@ const DeleteUserDialog = ({ openDialog, setOpenDialog }: Props) => {
       dispatch(logOut());
       navigate(ROUTES.SignUpPage);
     }
-    if (error) return <Alert severity="error">{error}</Alert>;
   };
 
   return (

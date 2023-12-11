@@ -40,11 +40,6 @@ const MyBannersPage = () => {
         <BannerTable setOpenDialog={setBannerToDelete} page="my-banners" />
       )}
       {pending && <Pending />}
-      {error && (
-        <Alert severity="error">
-          cant get banners list from server. try again later.
-        </Alert>
-      )}
       {!pending && !error && !bannersState && (
         <Alert severity="info">You hadn't created banners yet.</Alert>
       )}

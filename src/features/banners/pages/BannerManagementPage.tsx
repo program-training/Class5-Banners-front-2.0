@@ -1,4 +1,4 @@
-import { Alert, Container, Typography } from "@mui/material";
+import { Container, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BannerTable } from "../components/BannerTable";
 import BannerManagementTop from "../components/BannerManagementTop";
@@ -11,9 +11,7 @@ import { getBannersReq } from "../service/bannerReqFromServer";
 
 const BannerManagementPage = () => {
   const { userState } = useAppSelector((state) => state.user);
-  const { bannersState, error, pending } = useAppSelector(
-    (store) => store.banners
-  );
+  const { bannersState, pending } = useAppSelector((store) => store.banners);
   const dispatch = useAppDispatch();
   const [BannerToDelete, setBannerToDelete] = useState<string | null | boolean>(
     null
@@ -40,7 +38,6 @@ const BannerManagementPage = () => {
           </>
         )}
         {pending && <Pending />}
-        {error && <Alert severity="error">{error}</Alert>}
         <DeleteBannerDialog
           openDialog={BannerToDelete}
           setOpenDialog={setBannerToDelete}

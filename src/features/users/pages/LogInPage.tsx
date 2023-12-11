@@ -4,7 +4,7 @@ import { useState } from "react";
 import PasswordInputs from "../components/PasswordInput";
 import FormError from "../components/SignUpFormError";
 import SignUpSubmitButton from "../components/SignUpSubmitButton";
-import { Alert, CircularProgress, Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import { Link, Navigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import ROUTES from "../../router/routes";
@@ -15,11 +15,7 @@ const LogIn = () => {
   const [isValidEmail, setIsValidEmail] = useState(true);
   const [password, setPassword] = useState("");
   const [isValidPassword, setIsValidPassword] = useState(true);
-  const {
-    userState: user,
-    error,
-    loading,
-  } = useAppSelector((store) => store.user);
+  const { userState: user, loading } = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
 
   const isAllValid = email && isValidEmail && password && isValidPassword;
@@ -69,7 +65,6 @@ const LogIn = () => {
             </>
           )}
           {loading && <CircularProgress />}
-          {error && <Alert severity="error">{error}</Alert>}
 
           <Typography
             variant="body2"
