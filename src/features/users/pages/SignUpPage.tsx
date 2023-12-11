@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Grid,
@@ -30,8 +30,8 @@ const SignUpPage = () => {
 
   const {
     userState: user,
-    error,
     loading,
+    token,
   } = useAppSelector((store) => store.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -44,15 +44,16 @@ const SignUpPage = () => {
     isValidPassword &&
     isValidConfirmPassword;
 
+  useEffect(() => {
+    if (token) navigate(ROUTES.LogInPage);
+  }, [token]);
+
   const handleSignUp = () => {
     if (isAllValid) {
       dispatch(signUpReq({ email, isAdmin, password, username }));
-
-      if (!loading && !error) {
-        navigate(ROUTES.LogInPage);
-      }
     }
   };
+
   if (user) return <Navigate replace to={ROUTES.BannerManagementPage} />;
   return (
     <Grid

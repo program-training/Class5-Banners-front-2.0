@@ -30,7 +30,7 @@ export const signUpReq = createAsyncThunk(
         mutation: SIGNUP,
         variables: { user: { ...userFromClient } },
       });
-      return user;
+      return user.signup;
     } catch (error) {
       return Promise.reject(error);
     }
