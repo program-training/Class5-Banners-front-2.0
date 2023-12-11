@@ -86,7 +86,6 @@ export const editBannerReq = createAsyncThunk(
   "banners/editBannerReq",
   async (banner: BannerInterface) => {
     try {
-      console.log(banner);
       const { data } = await client.mutate({
         mutation: UPDATE_BANNER,
         variables: { bannerId: banner._id, properties: { ...banner } },

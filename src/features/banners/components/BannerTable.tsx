@@ -78,7 +78,7 @@ export const BannerTable = ({ setOpenDialog, page }: Props) => {
                 </StyledTableCell>
               )}
               <StyledTableCell align="center">
-                {String(banner.createdAt.substring(0, 10))}
+                {banner.createdAt}
               </StyledTableCell>
               <StyledTableCell align="center">
                 {banner.note || "none"}
