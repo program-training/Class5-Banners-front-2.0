@@ -34,7 +34,7 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export const BannerTable = ({ setOpenDialog, page }: Props) => {
-  const { bannersState } = useAppSelector((store) => store.banners);
+  const { bannersToDisplay } = useAppSelector((store) => store.banners);
   const rows = ["Image", "Title", "Creation Date", "Note", "Delete", "Edit"];
   if (page === "banner-management") {
     rows.splice(2, 0, "Author");
@@ -58,7 +58,7 @@ export const BannerTable = ({ setOpenDialog, page }: Props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {bannersState?.map((banner, i) => (
+          {bannersToDisplay?.map((banner, i) => (
             <StyledTableRow key={i}>
               <StyledTableCell align="center" sx={{ cursor: "pointer" }}>
                 <img

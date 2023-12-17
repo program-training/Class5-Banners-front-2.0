@@ -14,6 +14,7 @@ import { ProductInterface } from "./interface/ProductInterface";
 interface InitialState {
   pending: boolean;
   bannersState: BannerInterface[] | null;
+  bannersToDisplay: BannerInterface[] | null;
   specificBanner: BannerInterface | null;
   products: ProductInterface[] | null;
   error: string;
@@ -22,6 +23,7 @@ interface InitialState {
 const initialState: InitialState = {
   pending: false,
   bannersState: null,
+  bannersToDisplay: null,
   specificBanner: null,
   products: null,
   error: "",
@@ -31,8 +33,9 @@ export const bannersSlice = createSlice({
   name: "banners",
   initialState,
   reducers: {
-    setBanners: (state, action: PayloadAction<BannerInterface[]>) => {
-      state.bannersState = action.payload;
+    setBannersToDisplay: (state, action: PayloadAction<BannerInterface[]>) => {
+      if (!action.payload) state.bannersToDisplay = state.bannersState;
+      state.bannersToDisplay = action.payload;
       return state;
     },
     setSpecificBanner: (state, action) => {
@@ -48,6 +51,7 @@ export const bannersSlice = createSlice({
     });
     builder.addCase(getBannersReq.fulfilled, (state, { payload }) => {
       state.pending = false;
+      state.bannersToDisplay = payload;
       state.bannersState = payload;
       state.error = "";
       return state;
@@ -139,5 +143,6 @@ export const bannersSlice = createSlice({
     });
   },
 });
-export const { setBanners, setSpecificBanner } = bannersSlice.actions;
+export const { setBannersToDisplay: setBanners, setSpecificBanner } =
+  bannersSlice.actions;
 export default bannersSlice.reducer;

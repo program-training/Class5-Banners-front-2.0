@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { BannerInterface } from "../interface/BannerInterface";
 import { useAppDispatch } from "../../../redux/hooks";
-import { setSpecificBanner } from "../bannersSlice";
+import { setBanners } from "../bannersSlice";
 import ROUTES from "../../router/routes";
 
 const BannerManagementTop = ({ banners }: { banners: BannerInterface[] }) => {
@@ -25,7 +25,7 @@ const BannerManagementTop = ({ banners }: { banners: BannerInterface[] }) => {
         banner.title.toLowerCase().includes(value.toLowerCase()) ||
         banner.authorID.toLowerCase().includes(value.toLowerCase())
     );
-    dispatch(setSpecificBanner(filteredBanners));
+    dispatch(setBanners(filteredBanners));
   };
 
   return (
