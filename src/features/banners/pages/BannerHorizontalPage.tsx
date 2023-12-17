@@ -36,6 +36,7 @@ const BannerPage = () => {
   useEffect(() => {
     id && dispatch(getBannerByProdIdReq(id));
   }, [banner]);
+
   if (!banner) return;
   if (pending) return <Pending />;
   return (
@@ -73,17 +74,17 @@ const BannerPage = () => {
               animation: `${slideInFromLeft} 1s ease-in-out`, // Added animation
             }}
             alt="ad"
-            src={banner?.imageURL}
+            src={banner.imageURL}
           />
         </Box>
         <Box flex="1">
           <Typography variant="h4" fontFamily="fantasy" color="white">
-            {banner?.title || "Title"}
+            {banner.title || "Title"}
           </Typography>
           <Typography variant="subtitle1" fontFamily="fantasy" color="white">
-            {banner?.description || "Description"}
+            {banner.description || "Description"}
           </Typography>
-          {banner?.note && (
+          {banner.note && (
             <Typography
               variant="body1"
               fontFamily="cursive"

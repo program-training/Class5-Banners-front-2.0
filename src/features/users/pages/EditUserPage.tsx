@@ -4,11 +4,12 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { Alert, CircularProgress, Container } from "@mui/material";
+import { Alert, Container } from "@mui/material";
 import { useForm, SubmitHandler, FieldValues } from "react-hook-form";
 import { UserInterface } from "../interfaces/userInterface";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { editUserReq, getUserReq } from "../service/asyncReq";
+import Pending from "../../banners/components/Pending";
 
 const EditUserPage = () => {
   const { register, handleSubmit } = useForm();
@@ -38,8 +39,10 @@ const EditUserPage = () => {
       isAdmin: data.isAdmin ? true : false,
     };
     dispatch(editUserReq(updatedUserData));
+    dispatch(getUserReq());
   };
-
+  if (!userData) return;
+  if (loading) return <Pending />;
   return (
     <>
       <Container
@@ -66,7 +69,7 @@ const EditUserPage = () => {
           variant="outlined"
           fullWidth
           {...register("username")}
-          value={userData?.username || ""}
+          value={userData.username || ""}
           sx={{ mb: 2 }}
           onChange={handleChange}
         />
@@ -74,7 +77,7 @@ const EditUserPage = () => {
           control={
             <Checkbox
               {...register("isAdmin")}
-              defaultChecked={userData?.isAdmin || false}
+              defaultChecked={userData.isAdmin || false}
             />
           }
           label={"Admin"}
@@ -89,7 +92,6 @@ const EditUserPage = () => {
             Save Changes
           </Button>
         )}
-        {loading && <CircularProgress />}
         {!error && !loading && userState === userData && (
           <Alert severity="success">update succeeded</Alert>
         )}
